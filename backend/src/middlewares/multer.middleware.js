@@ -3,8 +3,11 @@ import path from 'path';
 import fs from 'fs';
 import AppError from '../utils/AppError.js';
 
-// Ensure 'uploads' directory exists on server startup
-const uploadDir = path.join(process.cwd(), 'uploads');
+// Use /tmp directory on production/Vercel, fallback to local uploads folder in development
+const uploadDir = process.env.NODE_ENV === 'production' 
+    ? os.tmpdir() 
+    : path.join(process.cwd(), 'uploads');
+
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
