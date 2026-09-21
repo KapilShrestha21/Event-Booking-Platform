@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+  <defs>
+    <!-- Main Gradient -->
+    <linearGradient id="primaryGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+
+    <!-- Dark Contrast Gradient -->
+    <linearGradient id="darkGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#047857" />
+      <stop offset="100%" stop-color="#064E3B" />
+    </linearGradient>
+
+    <!-- Accent Gradient -->
+    <linearGradient id="accentLime" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399" />
+      <stop offset="100%" stop-color="#10B981" />
+    </linearGradient>
+
+    <!-- Subtle Glow Shadow -->
+    <filter id="subtleShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#047857" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <g transform="translate(400, 370)" filter="url(#subtleShadow)">
+    <!-- Base Location Pin Shadow Layer (Dark Green) -->
+    <path d="M 0 -220 
+             C -120 -220, -200 -140, -200 -20 
+             C -200 80, -70 190, 0 250 
+             C 70 190, 200 80, 200 -20 
+             C 200 -140, 120 -220, 0 -220 Z" 
+          fill="url(#primaryGreen)" />
+
+    <!-- Calendar Ticket Overlay Shape (Right Wing / Fold Accent) -->
+    <path d="M 0 -220 
+             C 120 -220, 200 -140, 200 -20 
+             C 200 80, 70 190, 0 250 
+             L 0 -220 Z" 
+          fill="url(#darkGreen)" 
+          opacity="0.15" />
+
+    <!-- Inner White Shield / Ticket Cutout Area -->
+    <rect x="-110" y="-140" width="220" height="180" rx="24" fill="#FFFFFF" />
+
+    <!-- Calendar Top Header Bar -->
+    <path d="M -110 -140 L 110 -140 A 24 24 0 0 1 110 -110 L -110 -110 A 24 24 0 0 1 -110 -140 Z" fill="url(#darkGreen)" />
+
+    <!-- Calendar Binder Rings/Pegs -->
+    <rect x="-60" y="-160" width="16" height="32" rx="8" fill="url(#accentLime)" />
+    <rect x="40" y="-160" width="16" height="32" rx="8" fill="url(#accentLime)" />
+
+    <!-- Ticket Notch Cutouts (Left & Right Sides) -->
+    <circle cx="-110" cy="-30" r="16" fill="url(#primaryGreen)" />
+    <circle cx="110" cy="-30" r="16" fill="url(#primaryGreen)" />
+
+    <!-- Center Stage / Star Icon (Event Highlight) -->
+    <path d="M 0 -85 
+             L 10 -55 
+             L 40 -55 
+             L 16 -37 
+             L 25 -8 
+             L 0 -25 
+             L -25 -8 
+             L -16 -37 
+             L -40 -55 
+             L -10 -55 Z" 
+          fill="url(#primaryGreen)" />
+
+    <!-- Dynamic Sparkle/Celebration Beam Elements -->
+    <circle cx="-140" cy="-160" r="12" fill="url(#accentLime)" />
+    <circle cx="150" cy="-130" r="8" fill="url(#accentLime)" />
+    <circle cx="170" cy="-80" r="14" fill="url(#primaryGreen)" />
+  </g>
+</svg>
