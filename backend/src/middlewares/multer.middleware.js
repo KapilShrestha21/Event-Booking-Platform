@@ -1,6 +1,7 @@
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
+import os from 'os';
 import AppError from '../utils/AppError.js';
 
 // Use /tmp directory on production/Vercel, fallback to local uploads folder in development
