@@ -36,13 +36,19 @@ app.use(cookieParser());
 // make save image accessible through a URL - The URL starts with /uploads, so it should look inside uploads folder
 app.use(
     '/uploads', // When the URL starts with /uploads, use this uploads folder to find the requested file.
-express.static(uploadsDir)
+    express.static(uploadsDir)
 );
 
 app.use(cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true
-}))
+    origin: (origin, callback) => {
+        if (!origin) return callback(null, true);
+        const allowed =
+            origin === process.env.CLIENT_URL ||
+            /^https:\/\/event-booking-platform.*\.vercel\.app$/.test(origin);
+        callback(allowed ? null : new Error('Not allowed by CORS'), allowed);
+    },
+    credentials: true,
+}));
 
 // route
 app.use("/api/v1/auth", authRoutes); // for login http://localhost:5000/api/v1/auth/login
