@@ -20,11 +20,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // create a path to upload - like accessing uploads folder
-const uploadsDir = path.join(__dirname, 'uploads');
+const uploadsDir = (process.env.VERCEL === '1' || process.env.NODE_ENV === 'production')
+    ? '/tmp'
+    : path.join(__dirname, 'uploads');
 
 // ensure 'uploads' directory exists on server startup
 if (!fs.existsSync(uploadsDir)) {
-    fs.mkdirSync(uploadsDir);
+    fs.mkdirSync(uploadsDir, { recursive: true }); // add recursive: true, cheap safety net
 }
 
 // middleware
@@ -34,7 +36,7 @@ app.use(cookieParser());
 // make save image accessible through a URL - The URL starts with /uploads, so it should look inside uploads folder
 app.use(
     '/uploads', // When the URL starts with /uploads, use this uploads folder to find the requested file.
-    express.static(path.join(__dirname, 'uploads')) // Actual folder where the files are stored
+express.static(uploadsDir)
 );
 
 app.use(cors({
