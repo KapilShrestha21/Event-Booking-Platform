@@ -6,7 +6,7 @@ import { registerService, loginService, deleteUserService } from "../services/au
 const COOKIE_OPTIONS = {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
 };
 
 const register = catchAsync(async (req, res, next) => {
@@ -56,7 +56,7 @@ const deleteUser = catchAsync(async (req, res) => {
 
     const deletedUser = await deleteUserService(userId);
     res.clearCookie('token', COOKIE_OPTIONS);
-    return handleResponse( res, 200, 'User deleted successfully', deletedUser );
+    return handleResponse(res, 200, 'User deleted successfully', deletedUser);
 })
 
 // return current logged-in user to verify from token in frontend
