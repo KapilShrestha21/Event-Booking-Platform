@@ -45,7 +45,8 @@ export const useEventById = (id) => {
   return useQuery({
     queryKey: eventKeys.detail(id),
     queryFn: () => getEventById(id),
-    enabled: !!id,
+    enabled: !!id && (options.enabled ?? true),
+    ...options,
   });
 };
 
@@ -109,13 +110,17 @@ export const useDeleteEvent = () => {
     mutationFn: deleteEvent,
 
     onSuccess: (_, id) => {
+
+      // Remove the deleted event's cache FIRST — nothing left for the
+      // broader invalidation below to accidentally refetch.
+      queryClient.removeQueries({
+        queryKey: eventKeys.detail(id),
+      });
+
       queryClient.invalidateQueries({
         queryKey: eventKeys.all,
       });
 
-      queryClient.invalidateQueries({
-        queryKey: eventKeys.detail(id),
-      });
 
       queryClient.invalidateQueries({
         queryKey: dashboardKeys.organizerStats(user?.id),

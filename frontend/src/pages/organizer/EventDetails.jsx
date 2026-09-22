@@ -20,7 +20,9 @@ const EventDetails = () => {
   const { id } = useParams();
 
   // fetch the event from selected id
-  const { data, isLoading, isError, error } = useEventById(id);
+  const { data, isLoading, isError, error } = useEventById(id, {
+    enabled: !isDeleting
+  });
 
   // handle nested data strucutre coming from backend
   const event = data?.data || data || null;
@@ -160,7 +162,7 @@ const EventDetails = () => {
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction
-                  onClick={handleDelete}
+                  onClick={() => handleDelete(id)}
                   className="bg-rose-600 hover:bg-rose-700 text-white focus:ring-rose-600"
                 >
                   Delete Event

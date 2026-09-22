@@ -176,8 +176,8 @@ export const updateEventService = async (id, eventData, organizerId, file = null
 export const deleteEventService = async (id, organizerId) => {
     const existingEvent = await getEventByIdService(id);
 
-    console.log(typeof id);
-    console.log(typeof organizerId);
+    // console.log(typeof id);
+    // console.log(typeof organizerId);
 
     if (existingEvent.organizer_id !== organizerId) {
         throw new AppError('You are not authorized to delete this event', 403);
