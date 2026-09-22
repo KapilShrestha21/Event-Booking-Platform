@@ -1,31 +1,28 @@
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
-import os from 'os';
 import AppError from '../utils/AppError.js';
 
-// Use /tmp directory on production/Vercel, fallback to local uploads folder in development
-const uploadDir = process.env.NODE_ENV === 'production' 
-    ? os.tmpdir() 
+// Vercel serverless environment strictly allows writes to '/tmp'
+const uploadDir = (process.env.VERCEL === '1' || process.env.NODE_ENV === 'production')
+    ? '/tmp' 
     : path.join(process.cwd(), 'uploads');
 
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Configure storage location and filename format
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, uploadDir); // Saves files into your root 'uploads/' folder
+        cb(null, uploadDir);
     },
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
         const ext = path.extname(file.originalname);
-        cb(null, `event-${uniqueSuffix}${ext}`); // generate filename to avoid duplication
+        cb(null, `event-${uniqueSuffix}${ext}`);
     }
 });
 
-// File filter (Reject non-image files)
 const fileFilter = (req, file, cb) => {
     if (file.mimetype.startsWith('image/')) {
         cb(null, true);
@@ -37,7 +34,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
     storage,
     fileFilter,
-    limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
+    limits: { fileSize: 5 * 1024 * 1024 }
 });
 
 export default upload;
