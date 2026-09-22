@@ -19,16 +19,17 @@ const EventDetails = () => {
   // get user id from url with the help of react router dom
   const { id } = useParams();
 
+  
+  // for deleting event
+  const { mutate: deleteEvent, isPending: isDeleting } = useDeleteEvent();
+  
   // fetch the event from selected id
   const { data, isLoading, isError, error } = useEventById(id, {
     enabled: !isDeleting
   });
-
+  
   // handle nested data strucutre coming from backend
   const event = data?.data || data || null;
-
-  // for deleting event
-  const { mutate: deleteEvent, isPending: isDeleting } = useDeleteEvent();
 
   // for updating event
   const { mutate: updateEvent, isPending: isUpdating } = useUpdateEvent();

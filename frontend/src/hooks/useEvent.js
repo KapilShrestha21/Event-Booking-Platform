@@ -41,12 +41,12 @@ export const useMyEvents = () => {
 };
 
 // Fetch a single event by ID
-export const useEventById = (id) => {
+export const useEventById = (id, options = {}) => {
   return useQuery({
+    ...options,
     queryKey: eventKeys.detail(id),
     queryFn: () => getEventById(id),
     enabled: !!id && (options.enabled ?? true),
-    ...options,
   });
 };
 
